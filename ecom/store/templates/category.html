@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<style>
+    .category-detail-hero {
+        padding: 140px 0 80px;
+        text-align: center;
+    }
+    
+    .category-detail-hero h1 {
+        font-size: clamp(3rem, 7vw, 5rem);
+        font-weight: 900;
+        letter-spacing: -0.03em;
+        margin-bottom: 20px;
+        animation: fadeInUp 0.8s ease-out;
+    }
+    
+    .category-detail-hero p {
+        font-size: 1.25rem;
+        color: var(--text-dim);
+        animation: fadeInUp 0.8s ease-out 0.2s backwards;
+    }
+    
+    .category-products-section {
+        padding: 60px 0 120px;
+    }
+    
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+</style>
+
+<!-- Hero Section -->
+<section class="category-detail-hero">
+    <div class="container">
+        <h1>{{ category }}</h1>
+        <p>Explore our {{ category|lower }} collection</p>
+    </div>
+</section>
+
+<!-- Products Section -->
+<section class="category-products-section">
+    <div class="container">
+        <div class="product-grid" style="max-width: 1400px; margin: 0 auto;">
+            {% for product in products %}
+            <div class="product-card">
+                {% if product.is_sale %}
+                <div class="sale-badge">SALE</div>
+                {% endif %}
+                
+                <a href="{% url 'product' product.id %}" style="text-decoration: none; color: inherit;">
+                    <div class="product-image-wrapper">
+                        <img class="product-image" src="{{ product.image.url }}" alt="{{ product.name }}" />
+                    </div>
+                    
+                    <div class="product-info">
+                        <h3 class="product-name">{{ product.name }}</h3>
+                        <p class="product-description">{{ product.description }}</p>
+                        
+                        <div class="product-price">
+                            {% if product.is_sale %}
+                                <span class="price-current">₱{{ product.sale_price }}</span>
+                                <span class="price-original">₱{{ product.price }}</span>
+                            {% else %}
+                                <span class="price-current">₱{{ product.price }}</span>
+                            {% endif %}
+                        </div>
+                        
+                       <button class="btn btn-primary" type="button">
+                             View Details
+                        </button>
+
+                    </div>
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+{% endblock %}

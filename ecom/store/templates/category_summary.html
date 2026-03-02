@@ -1,0 +1,119 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<style>
+    .category-hero {
+        padding: 140px 0 80px;
+        text-align: center;
+    }
+    
+    .category-hero h1 {
+        font-size: clamp(3rem, 7vw, 5rem);
+        font-weight: 900;
+        letter-spacing: -0.03em;
+        margin-bottom: 20px;
+        animation: fadeInUp 0.8s ease-out;
+    }
+    
+    .category-hero p {
+        font-size: 1.5rem;
+        color: var(--text-dim);
+        animation: fadeInUp 0.8s ease-out 0.2s backwards;
+    }
+    
+    .categories-container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 80px 20px 120px;
+    }
+    
+    .category-card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        padding: 40px;
+        margin-bottom: 24px;
+        text-align: center;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        animation: fadeInUp 0.6s ease-out backwards;
+        cursor: pointer;
+    }
+    
+    .category-card:nth-child(1) { animation-delay: 0.3s; }
+    .category-card:nth-child(2) { animation-delay: 0.4s; }
+    .category-card:nth-child(3) { animation-delay: 0.5s; }
+    .category-card:nth-child(4) { animation-delay: 0.6s; }
+    
+    .category-card:hover {
+        transform: translateY(-8px);
+        border-color: rgba(255, 255, 255, 0.2);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+    }
+    
+    .category-card a {
+        text-decoration: none;
+        color: var(--text);
+        display: block;
+    }
+    
+    .category-card h2 {
+        font-size: 2rem;
+        font-weight: 800;
+        letter-spacing: -0.02em;
+        margin: 0;
+        transition: all 0.3s;
+    }
+    
+    .category-card:hover h2 {
+        letter-spacing: 0.02em;
+    }
+    
+    .category-icon {
+        font-size: 3rem;
+        margin-bottom: 16px;
+        opacity: 0.8;
+    }
+    
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+</style>
+
+<!-- Hero Section -->
+<section class="category-hero">
+    <div class="container">
+        <h1>Categories</h1>
+        <p>Choose your category below...</p>
+    </div>
+</section>
+
+<!-- Categories -->
+<div class="categories-container">
+    {% for category in categories %}
+    <div class="category-card">
+        <a href="{% url 'category' category %}">
+            <div class="category-icon">
+                {% if category == "Fragrance" or category == "Perfume" %}
+                    🌸
+                {% elif category == "Shoes" %}
+                    👟
+                {% elif category == "Clothes" %}
+                    👕
+                {% else %}
+                    ✨
+                {% endif %}
+            </div>
+            <h2>{{ category }}</h2>
+        </a>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock %}
